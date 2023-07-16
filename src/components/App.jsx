@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { Component } from 'react';
-import { Filter } from './Filter/Filter'
+import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { Form } from './Form/Form';
 
@@ -13,6 +13,19 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
+  };
+
+  componentDidMount = () => {
+    const localData = localStorage.getItem('localContact');
+    if (localData) {
+      this.setState({ contacts: JSON.parse(localData) });
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('localContact', JSON.stringify(this.state.contacts));
+    }
   };
 
   addContact = (name, number) => {
@@ -34,12 +47,12 @@ export class App extends Component {
     });
   };
 
-  deleteContact = (id) => {
+  deleteContact = id => {
     const filterId = this.state.contacts.filter(contact => contact.id !== id);
     this.setState({
-      contacts: [...filterId]
-    })
-  }
+      contacts: [...filterId],
+    });
+  };
 
   render() {
     return (
