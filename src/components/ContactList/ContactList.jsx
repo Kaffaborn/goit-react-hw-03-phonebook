@@ -1,6 +1,8 @@
 import { List, ListEl, ListBtn } from './ContactList.styled';
+import PropTypes from 'prop-types';
 
 export const ContactList = ({ onClick, contacts, filter }) => {
+  console.log(filter);
   const filterName = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -18,4 +20,10 @@ export const ContactList = ({ onClick, contacts, filter }) => {
       ))}
     </List>
   );
+};
+
+ContactList.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  contacts: PropTypes.array,
+  filter: PropTypes.string,
 };
